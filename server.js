@@ -111,6 +111,6 @@ http.get("http://wx.toronto.ca/festevents.nsf/torontoalleventsfeed.xml", functio
 
 
 
-function parse_XML2json(var xmldata){
+function parse_XML2json(xmldata){
 	
 }
