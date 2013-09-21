@@ -98,3 +98,19 @@ function begin(){
 }
 
 */
+
+http.get("http://wx.toronto.ca/festevents.nsf/torontoalleventsfeed.xml", function(res) {
+  res.on('data', function (chunk) {
+    console.log("data is"+chunk);
+    parse_XML2json(chunk);
+  });
+}).on('error', function(e) {
+  console.log("Got error: " + e.message);
+});
+
+
+
+
+function parse_XML2json(var xmldata){
+	
+}
