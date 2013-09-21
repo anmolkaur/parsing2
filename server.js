@@ -3,7 +3,7 @@ var fs = require('fs'); //filesystemrelayed functionality
 var path = require('path'); //fs path related functionality
 var mime = require('mime'); //ability to derive a MIME type based on filename extension
 var cache = {}; //contents of cached files are stored
-var request = require("request");
+//var request = require("request");
 
 
 
@@ -80,7 +80,7 @@ server.listen(3000, function(){
 //console responses
 
 //console.log("hi");
-
+/*
 var url="https://www.eventbrite.com/json/event_search?app_key=QIY3RFGKIACEQZ32M3&keywords=toronto";
 
 
@@ -97,4 +97,4 @@ function begin(){
 
 }
 
-
+*/
