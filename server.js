@@ -3,9 +3,14 @@ var fs = require('fs'); //filesystemrelayed functionality
 var path = require('path'); //fs path related functionality
 var mime = require('mime'); //ability to derive a MIME type based on filename extension
 var cache = {}; //contents of cached files are stored
+var cronJob = require('cron').CronJob;
+var replace = require("replace");
+//var xml2json = require('node-xml2json'); 
 //var request = require("request");
+var xml2json = require('xmlparser');
+var XmlStream = require('xml-stream');
 
-
+//var libxmljs = require("libxmljs");
 
 function send404(response) {
 	response.writeHead(404, {'Content-Type': 'text/plain'});
@@ -70,7 +75,7 @@ var server = http.createServer(function(request, response){
 
 server.listen(3000, function(){
 	console.log("Server listening on port 3000.");
-	//begin();
+	begin();
 });
 
 
@@ -99,18 +104,56 @@ function begin(){
 
 */
 
-http.get("http://wx.toronto.ca/festevents.nsf/torontoalleventsfeed.xml", function(res) {
-  res.on('data', function (chunk) {
-    console.log("data is"+chunk);
-    parse_XML2json(chunk);
-  });
-}).on('error', function(e) {
-  console.log("Got error: " + e.message);
-});
+function begin(){
+/*var parseString = require('xml2js').parseString;
+
+	function parse_XML2json1(xmldata){	
+		//var xml = "<root>Hello xml2js!</root>";
+		console.log("!!!!!"+xmldata);
+		parseString(xmldata, function (err, result) {
+			console.log("DONE PARSING TO JSON");
+	    	console.log(result);
+		});
+	}
+
+	function parse_XML2json2(xmldata){	
+		
+	}
+*/
+	var url = "http://wx.toronto.ca/festevents.nsf/torontocyclingeventsfeed.xml";
 
 
+	http.get(url, function(res) {
+	  res.on('data', function (chunk) {
+	    console.log("data is--------"+chunk);
+	   
+	    chunk.setEncoding('utf8');
+	    var xml = new XmlStream(chunk, 'utf8');
+		console.log(xml);
 
+		//var xml = chunk.split("</lastBuildDate>");
+		//xml = xml.map(function(val){return +val + 1;});
+		//console.log(xml[0] + xml[1]);
 
-function parse_XML2json(xmldata){
+		//var json = xml2json.parser(xml);
+
+		//var xmlDoc = libxmljs.parseXml(xml);
+		//console.log("json -----------------"+json);
+		//var data = JSON.stringify(json);
+		//console.log(data);
+
+	  });
+	}).on('error', function(e) {
+	  console.log("Got error: " + e.message);
+	});
+
 	
+
+/*
+	var job = new cronJob('* * * * * *', function(){
+		console.log('You will see this message every second');
+
+	}, null, true, "America/Los_Angeles");
+	
+*/
 }
